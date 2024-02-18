@@ -1,0 +1,63 @@
+{% extends "home.html" %} 
+
+{% block title %} 
+    MY TEASHOP
+{% endblock %} 
+
+{% block body %}
+<div class="container">
+
+    <h2 class="text-center mt-4 mb-5">Order List</h2>
+
+    <div class="row justify-content-center">
+        {% for o in orders %}
+        <div class="col-md-8 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title">Order Id: {{ o.id }}</h3>
+                    <p class="card-text">Date: {{ o.created_at }}</p>
+                    <p class="card-text">Name: {{ o.user }}</p>
+                    <p class="card-text">Phone: {{ o.phone }}</p>
+                    <p class="card-text">Address: {{ o.address }}</p>
+                    <h5 class="card-title">Order Category: {{ o.status }}</h5>
+                    
+                    
+                    <div class="table-responsive mt-4">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Image</th>
+                                    <th>Price</th>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ o.product.id }}</td>
+                                    <td><img src="{{ o.product.image.url }}" alt="Product Image" style="max-width: 100px;"></td>
+                                    <td>{{ o.product.price }}</td>
+                                    <td>{{ o.product.name }}</td>
+                                    <td>{{ o.product.qty }}</td>
+                                    <td>{{ o.product.total }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td class="font-bold">Total</td>
+                                    <td class="font-bold">{{ o.total_qty }}</td>
+                                    <td class="font-bold">{{ o.total_price }}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                            <a href="/product/orderDelete/{{ o.name}}" class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

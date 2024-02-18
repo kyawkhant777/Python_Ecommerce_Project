@@ -1,0 +1,52 @@
+{% extends "home.html" %}
+{% block title %}
+   Order Create
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="mt-4 mb-5">Order Create</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-control" name="phone" placeholder="Enter phone number" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" name="address" required>
+        </div>
+
+        <h3>Selected Product:</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Name</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td><img src="{{ product.image.url }}" alt="Product Image" class="img-thumbnail" style="max-height: 100px;"></td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.qty }}</td>
+                    <td>{{ product.total }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary mt-4">Order</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Shop</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Custom CSS for specific styling */
+    .navbar .dropdown-menu {
+      background-color: #343a40; /* Dark background color for dropdown menu */
+    }
+    .navbar .dropdown-menu .dropdown-item {
+      color: #ffffff; /* Text color for dropdown menu items */
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/product/list/">My Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if request.path == '/product/list/' %} active {% endif %}">
+                    <a class="nav-link" href="/product/list/">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">{{ user.username }}</a>
+                        <a class="dropdown-item" href="#">{{ user.email }}</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/logout/">Logout</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login/">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register/">Register</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/product/orderList/">Customer Order List</a>
+                </li>
+                <form class="nav-item dropdown" method="GET" action="/product/list/">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for c in cat %}
+                        <button class="dropdown-item" type="submit" name="c" value="{{ c.id }}">{{ c.name }}</button>
+                        {% endfor %}
+                    </div>
+                </li>
+            </form>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="GET" action="/product/search_by/">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <a class="nav-link" href="/product/cartList/">
+                <i class="fas fa-shopping-cart"></i> <span class="badge badge-light">{{ count }}</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

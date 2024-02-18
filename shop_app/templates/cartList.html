@@ -1,0 +1,47 @@
+{% extends "home.html" %} 
+
+{% block title %} 
+MY TEASHOP
+{% endblock %} 
+
+{% block body %}
+<div class="container">
+    <h2>Shopping Cart List</h2>
+    {% if carts %} 
+    <div class="row justify-content-center">
+            {% for c in carts %}
+                <div class="card shadow col-sm-12 col-md-4 col-lg-3 m-2" style="width: 18rem;">
+                    <img src="{{ c.product.image.url }}" class="card-img-top" alt="Product Image">
+                    <div class="card-body">
+                        <h3 class="card-title">{{c.product.name}}</h3>
+                        <p class="card-text">Qty: :{{c.product.qty}}</p>
+                        <p class="card-text">Price: :{{c.product.price}}</p>
+                        <a href="/product/cartDelete/{{ c.id }}" class="btn btn-danger">Remove</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h5>Nothing to show in the cart</h5>
+            <a href="/product/list/" class="btn btn-primary">See Products</a>
+        {% endif %}
+    </div>
+    {% if cart %}
+    <form method="POST" enctype="multipart/form-data" action="/product/cartOrderCreate/">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label  class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label  class="form-label">Phone</label>
+          <input type="number" class="form-control" name="phone" placeholder="09_ _ _ _ _" required>
+        </div>
+        <div class="mb-3">
+        <label class="form-label" >Address</label>
+        <input type="text" class="form-control" name="address" required>
+        </div>
+  <button type="submit" class="btn btn-primary mb-5">Order</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

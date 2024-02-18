@@ -1,0 +1,37 @@
+{% extends "home.html" %}
+
+{% block title %}
+   MY TEASHOP
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="mt-4 mb-5">Product Details</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card shadow mb-4">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="Product Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">Category: {{ product.category }}</p>
+                    <p class="card-text">Created At: {{ product.created_at }}</p>
+                    <form action="/product/buyproduct/{{ product.id }}/" method="get">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <button class="btn btn-primary me-2" type="submit">Buy Now</button>
+                            <input class="form-control-inline" type="number" name="qty" value="1" min="1" max="10" aria-label="Quantity" style="width: 80px;">
+                        </div>
+                    </form>
+                    <form action="/product/cartCreate/{{ product.id }}/" method="get">
+                        {% csrf_token %}
+                        <button class="btn btn-success" type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
